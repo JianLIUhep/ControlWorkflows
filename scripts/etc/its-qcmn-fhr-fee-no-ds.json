@@ -35,6 +35,7 @@
           "name": "RAWDATA"
         },
         "location": "local",
+        "mergingMode": "entire",
         "taskParameters": {
           "Layer": "2",
           "decoderThreads": "8",
