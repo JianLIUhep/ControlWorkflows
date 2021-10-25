@@ -84,7 +84,7 @@ command:
     - "--forwarding-policy"
     - "'dangling'"
     - "--host"
-    - "'{{it}}'"
+    - "'{{ it }}'"
     - "--labels"
     - "''"
     - "--local"
