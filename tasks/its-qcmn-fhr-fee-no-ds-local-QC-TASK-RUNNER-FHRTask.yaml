@@ -79,7 +79,7 @@ command:
     - "--forwarding-policy"
     - "'dangling'"
     - "--host"
-    - "'alio2-cr1-flp187'"
+    - "'{{ it }}'"
     - "--labels"
     - "''"
     - "--local"
