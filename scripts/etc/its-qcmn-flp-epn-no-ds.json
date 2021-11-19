@@ -133,7 +133,28 @@
         "localControl": "odc",
         "remotePort": "47706",
         "remoteMachine": "alio2-cr1-qme04.cern.ch"
+      },
+      "Vertexing" : {
+        "active" : "true",
+        "className" : "o2::quality_control_modules::glo::VertexingQcTask",
+        "moduleName" : "QcGLO",
+        "detectorName" : "GLO",
+        "cycleDurationSeconds" : "10",
+        "maxNumberCycles" : "-1",
+        "" : "The other type of dataSource is \"direct\", see basic-no-sampling.json.",
+        "dataSource" : {
+          "type" : "dataSamplingPolicy",
+          "name" : "tst-raw"
+        },
+        "taskParameters" : {
+          "myOwnKey" : "myOwnValue"
+        },
+        "location" : "local",
+        "localMachines": [ "localhost", "epn" ],
+        "remoteMachine": "alio2-cr1-qme04.cern.ch",
+        "remotePort": "47706"
       }
+
     },
     "checks": {
       "FHRCheck": {
@@ -199,7 +220,20 @@
             ]
           }
         ]
+      },
+      "QcCheck" : {
+        "active" : "false",
+        "className" : "o2::quality_control_modules::skeleton::SkeletonCheck",
+        "moduleName" : "QcSkeleton",
+        "policy" : "OnAny",
+        "detectorName" : "GLO",
+        "dataSource" : [ {
+          "type" : "Task",
+          "name" : "Vertexing",
+          "MOs" : ["example"]
+        } ]
       }
+
     }
   },
   "dataSamplingPolicies": [
@@ -244,6 +278,21 @@
         }
       ],
       "blocking": "false"
-    }
+    },
+   {
+     "id" : "tst-raw",
+     "active" : "true",
+     "machines" : [],
+     "query" : "pvtx:GLO/PVTX/0",
+     "samplingConditions" : [
+       {
+         "condition" : "random",
+         "fraction" : "0.1",
+         "seed" : "1234"
+       }
+     ],
+     "blocking" : "false"
+   }
+
   ]
 }
