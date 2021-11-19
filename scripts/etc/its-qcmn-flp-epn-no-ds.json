@@ -152,7 +152,9 @@
         "location" : "local",
         "localMachines": [ "localhost", "epn" ],
         "remoteMachine": "alio2-cr1-qme04.cern.ch",
-        "remotePort": "47706"
+        "localControl": "odc",
+  
+      "remotePort": "47707"
       }
 
     },
