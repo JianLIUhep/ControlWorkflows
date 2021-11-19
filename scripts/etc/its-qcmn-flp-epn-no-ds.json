@@ -154,7 +154,7 @@
         "remoteMachine": "alio2-cr1-qme04.cern.ch",
         "localControl": "odc",
   
-      "remotePort": "47790"
+      "remotePort": "47759"
       }
 
     },
