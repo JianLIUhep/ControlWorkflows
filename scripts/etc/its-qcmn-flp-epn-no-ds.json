@@ -138,7 +138,7 @@
         "active" : "true",
         "className" : "o2::quality_control_modules::glo::VertexingQcTask",
         "moduleName" : "QcGLO",
-        "detectorName" : "GLO",
+        "detectorName" : "ITS",
         "cycleDurationSeconds" : "10",
         "maxNumberCycles" : "-1",
         "" : "The other type of dataSource is \"direct\", see basic-no-sampling.json.",
@@ -154,7 +154,7 @@
         "remoteMachine": "alio2-cr1-qme04.cern.ch",
         "localControl": "odc",
   
-      "remotePort": "47707"
+      "remotePort": "47708"
       }
 
     },
@@ -228,13 +228,14 @@
         "className" : "o2::quality_control_modules::skeleton::SkeletonCheck",
         "moduleName" : "QcSkeleton",
         "policy" : "OnAny",
-        "detectorName" : "GLO",
+        "detectorName" : "ITS",
         "dataSource" : [ {
           "type" : "Task",
           "name" : "Vertexing",
           "MOs" : ["example"]
         } ]
       }
+
 
     }
   },
