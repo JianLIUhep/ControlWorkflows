@@ -114,4 +114,4 @@ command:
     - "--workflow-suffix"
     - "''"
     - "--period-timer-publish"
-    - "'10000000'"
+    - "'30000000'"
