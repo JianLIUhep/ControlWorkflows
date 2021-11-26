@@ -87,33 +87,6 @@
        "remotePort": "44154",
        "remoteMachine": "alio2-cr1-qme04"
       },
-      "ITSClusterTask": {
-        "active": "true",
-        "className": "o2::quality_control_modules::its::ITSClusterTask",
-        "moduleName": "QcITS",
-        "detectorName": "ITS",
-        "cycleDurationSeconds": "180",
-        "maxNumberCycles": "-1",
-        "dataSource_comment": "The other type of dataSource is \"direct\", see basic-no-sampling.json.",
-        "dataSource": {
-          "type": "dataSamplingPolicy",
-          "name": "compclus"
-        },
-        "location": "local",
-        "taskParameters": {
-          "layer": "1111111",
-          "clusterDictionaryPath": "/home/epn/odc/files/ITSdictionary.bin",
-          "runNumberPath": "/home/its/QC/workdir/infiles/RunNumber.dat",
-          "geomPath": "/home/epn/odc/files/o2sim_geometry.root",
-          "nThreads": "4"
-        },
-          "localMachines": [
-          "epn"
-        ],
-        "localControl": "odc",
-        "remotePort": "47705",
-        "remoteMachine": "alio2-cr1-qme04.cern.ch"
-      },
       "ITSTrackTask": {
         "active": "true",
         "className": "o2::quality_control_modules::its::ITSTrackTask",
@@ -190,22 +163,6 @@
           }
         ]
       },
-      "ITSClusterCheck": {
-        "active": "true",
-        "className": "o2::quality_control_modules::its::ITSClusterCheck",
-        "moduleName": "QcITS",
-        "policy": "OnAny",
-        "detectorName": "ITS",
-        "dataSource": [
-          {
-            "type": "Task",
-            "name": "ITSClusterTask",
-            "MOs": [
-              "Layer0/AverageClusterSize"
-            ]
-          }
-        ]
-      },
       "ITSTrackCheck": {
         "active": "true",
         "className": "o2::quality_control_modules::its::ITSTrackCheck",
@@ -247,20 +204,6 @@
         {
           "condition": "random",
           "fraction": "0.1",
-          "seed": "1441"
-        }
-      ],
-      "blocking": "false"
-    },
-    {
-      "id": "compclus",
-      "active": "true",
-      "machines": [],
-      "query": "compclus:ITS/COMPCLUSTERS/0;clustersrof:ITS/CLUSTERSROF/0",
-      "samplingConditions": [
-        {
-          "condition": "random",
-          "fraction": "1",
           "seed": "1441"
         }
       ],

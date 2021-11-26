@@ -1,0 +1,29 @@
+{
+    "internal-dpl-clock": "",
+    "FHRTask-proxy": "",
+    "ITSFEE-proxy": "",
+    "ITSClusterTask-proxy": "",
+    "ITSNoisyPixelTask-proxy": "",
+    "ITSTrackTask-proxy": "",
+    "MERGER-FHRTask1l-0": {
+        "period-timer-publish": "31000000"
+    },
+    "MERGER-ITSClusterTask1l-0": {
+        "period-timer-publish": "180000000"
+    },
+    "MERGER-ITSFEE1l-0": {
+        "period-timer-publish": "30000000"
+    },
+    "MERGER-ITSNoisyPixelTask1l-0": {
+        "period-timer-publish": "180000000"
+    },
+    "MERGER-ITSTrackTask1l-0": {
+        "period-timer-publish": "30000000"
+    },
+    "QC-CHECK-RUNNER-FHRCheck": "",
+    "QC-CHECK-RUNNER-ITSClusterCheck": "",
+    "QC-CHECK-RUNNER-ITSFeeCheck": "",
+    "QC-CHECK-RUNNER-ITSTrackCheck": "",
+    "QC-CHECK-RUNNER-sink-QC_ITSNoisyPixel-mo_0": "",
+    "internal-dpl-injected-dummy-sink": ""
+}
