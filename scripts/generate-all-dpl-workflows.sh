@@ -106,3 +106,6 @@ check_pwd
 ./tof-qcmn-compressor.sh
 ./tof-full-qcmn.sh
 ./tpc-full-qcmn.sh
+./tpc-qc-post-trending.sh
+./tpc-qc-post-calib.sh
+./tpc-qc-post-processing.sh
