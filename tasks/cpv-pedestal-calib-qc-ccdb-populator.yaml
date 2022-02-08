@@ -4,7 +4,8 @@ defaults:
   _module_cmdline: >-
     source /etc/profile.d/modules.sh && MODULEPATH={{ modulepath }} module load O2 QualityControl Control-OCCPlugin &&
     {{ dpl_command }} | o2-calibration-ccdb-populator-workflow
-  _plain_cmdline: "source /etc/profile.d/o2.sh && {{ len(extra_env_vars)>0 ? 'export ' + extra_env_vars + ' &&' : '' }} {{ dpl_command }} | o2-calibration-ccdb-populator-workflow"
+  _plain_cmdline: >-
+    source /etc/profile.d/o2.sh && {{ len(extra_env_vars)>0 ? 'export ' + extra_env_vars + ' &&' : '' }} {{ dpl_command }} | o2-calibration-ccdb-populator-workflow
 control:
   mode: "fairmq"
 wants:
@@ -75,6 +76,8 @@ command:
     - "'dangling'"
     - "--labels"
     - "''"
+    - "--name-extention"
+    - "''"
     - "--pipeline"
     - "''"
     - "--readers"
@@ -86,6 +89,8 @@ command:
     - "--shm-mlock-segment"
     - "'false'"
     - "--shm-mlock-segment-on-creation"
+    - "'false'"
+    - "--shm-no-cleanup"
     - "'false'"
     - "--shm-segment-id"
     - "'0'"
@@ -103,3 +108,7 @@ command:
     - "''"
     - "--ccdb-path"
     - "'http://o2-ccdb.internal'"
+    - "--sspec-max"
+    - "-1"
+    - "--sspec-min"
+    - "-1"

@@ -68,6 +68,7 @@ check_pwd
 ./emc-qcmn-remote-flp.sh
 ./emc-qcmn-remote-flpepn.sh
 ./emc-qcmn-epn.sh
+./emc-qcmn-epnall.sh
 ./hmpid-raw-qcmn.sh
 ./hmpid-raw-qc.sh
 ./hmpid-raw-to-pedestals.sh
@@ -106,3 +107,7 @@ check_pwd
 ./tof-qcmn-compressor.sh
 ./tof-full-qcmn.sh
 ./tpc-full-qcmn.sh
+./tpc-krypton-qcmn.sh
+./tpc-qc-post-trending.sh
+./tpc-qc-post-calib.sh
+./tpc-qc-post-processing.sh
