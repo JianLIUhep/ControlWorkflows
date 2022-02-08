@@ -1,4 +1,4 @@
-name: its-qcmn-flp-epn-no-ds-nocluster-remote-MERGER-ITSFEE1l-0
+name: its-qcmn-full-local-qc-task-ITS-ITSFEE
 defaults:
   log_task_output: none
   _module_cmdline: >-
@@ -12,13 +12,22 @@ wants:
   cpu: 0.01
   memory: 1
 bind:
-  - name: from_MERGER-ITSFEE1l-0_to_qc-check-ITSITSFeeCheck
+  - name: from_qc-task-ITS-ITSFEE_to_ITSFEE-proxy
     type: push
     transport: shmem
     addressing: ipc
     rateLogging: "{{ fmq_rate_logging }}"
     sndBufSize: 4
     rcvBufSize: 4
+  - name: from_qc-task-ITS-ITSFEE_to_dpl-output-proxy
+    type: push
+    transport: shmem
+    addressing: ipc
+    rateLogging: "{{ fmq_rate_logging }}"
+    sndBufSize: 4
+    rcvBufSize: 4
+properties:
+  qcConfiguration: 
 command:
   shell: true
   log: "{{ log_task_output }}"
@@ -44,7 +53,7 @@ command:
     - "--resources-monitoring"
     - "'{{ resources_monitoring }}'"
     - "--id"
-    - "'MERGER-ITSFEE1l-0'"
+    - "'qc-task-ITS-ITSFEE'"
     - "--shm-monitor"
     - "'false'"
     - "--log-color"
@@ -82,9 +91,10 @@ command:
     - "--forwarding-policy"
     - "'dangling'"
     - "--host"
-    - "''"
+    - "'{{ it }}'"
     - "--labels"
     - "''"
+    - "--local"
     - "--local-batch"
     - "''"
     - "--override-values"
@@ -93,7 +103,6 @@ command:
     - "''"
     - "--readers"
     - "'1'"
-    - "--remote"
     - "--remote-batch"
     - "''"
     - "--severity"
@@ -103,8 +112,6 @@ command:
     - "--shm-mlock-segment"
     - "'false'"
     - "--shm-mlock-segment-on-creation"
-    - "'false'"
-    - "--shm-no-cleanup"
     - "'false'"
     - "--shm-segment-id"
     - "'0'"
@@ -120,5 +127,7 @@ command:
     - "-1"
     - "--workflow-suffix"
     - "''"
-    - "--period-timer-publish"
+    - "--period-timer-cycle"
     - "'30000000'"
+    - "--qcConfiguration"
+    - "'{}'"

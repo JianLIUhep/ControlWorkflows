@@ -6,7 +6,7 @@ set -u;
 
 source helpers.sh
 
-WF_NAME=its-qcmn-fhr-fee-no-ds-entire-local
+WF_NAME=its-qcmn-full-local
 QC_GEN_CONFIG_PATH='json://'`pwd`'/etc/its-qcmn-fhr-fee-no-ds-entire.json'
 QC_FINAL_CONFIG_PATH='consul-json://{{ consul_endpoint }}/o2/components/qc/ANY/any/its-qcmn-fhr-fee-no-ds-entire-{{ it }}'
 QC_CONFIG_PARAM='qc_config_uri'

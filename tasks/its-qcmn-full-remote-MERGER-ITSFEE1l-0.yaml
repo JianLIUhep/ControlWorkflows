@@ -1,4 +1,4 @@
-name: its-qcmn-flp-epn-no-ds-nocluster-remote-MERGER-ITSFEE1l-0
+name: its-qcmn-full-remote-MERGER-ITSFEE1l-0
 defaults:
   log_task_output: none
   _module_cmdline: >-
@@ -103,8 +103,6 @@ command:
     - "--shm-mlock-segment"
     - "'false'"
     - "--shm-mlock-segment-on-creation"
-    - "'false'"
-    - "--shm-no-cleanup"
     - "'false'"
     - "--shm-segment-id"
     - "'0'"

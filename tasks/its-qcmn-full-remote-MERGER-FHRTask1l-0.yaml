@@ -1,4 +1,4 @@
-name: its-qcmn-flp-epn-no-ds-nocluster-remote-MERGER-ITSFEE1l-0
+name: its-qcmn-full-remote-MERGER-FHRTask1l-0
 defaults:
   log_task_output: none
   _module_cmdline: >-
@@ -12,7 +12,7 @@ wants:
   cpu: 0.01
   memory: 1
 bind:
-  - name: from_MERGER-ITSFEE1l-0_to_qc-check-ITSITSFeeCheck
+  - name: from_MERGER-FHRTask1l-0_to_qc-check-ITSFHRCheck
     type: push
     transport: shmem
     addressing: ipc
@@ -44,7 +44,7 @@ command:
     - "--resources-monitoring"
     - "'{{ resources_monitoring }}'"
     - "--id"
-    - "'MERGER-ITSFEE1l-0'"
+    - "'MERGER-FHRTask1l-0'"
     - "--shm-monitor"
     - "'false'"
     - "--log-color"
@@ -104,8 +104,6 @@ command:
     - "'false'"
     - "--shm-mlock-segment-on-creation"
     - "'false'"
-    - "--shm-no-cleanup"
-    - "'false'"
     - "--shm-segment-id"
     - "'0'"
     - "--shm-zero-segment"
@@ -121,4 +119,4 @@ command:
     - "--workflow-suffix"
     - "''"
     - "--period-timer-publish"
-    - "'30000000'"
+    - "'31000000'"

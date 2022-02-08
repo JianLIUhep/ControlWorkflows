@@ -12,7 +12,7 @@ QC_CONFIG_PARAM='qc_config_uri'
 
 cd ..
 
-WF_NAME=its-qcmn-flp-epn-no-ds-remote
+WF_NAME=its-qcmn-full-remote
 
 o2-qc --config $QC_GEN_CONFIG_PATH --remote -b --o2-control $WF_NAME
 
