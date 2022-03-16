@@ -1,0 +1,188 @@
+name: its-qcmn-flp-epn-no-ds-noisypix-remote
+vars:
+  dpl_command: >-
+    o2-qc --config {{ qc_config_uri }} --remote -b
+defaults:
+  qc_remote_machine: "alio2-cr1-qme04"
+  qc_config_uri: "consul-json://{{ consul_endpoint }}/o2/components/qc/ANY/any/its-qcmn-flp-epn-no-ds-noisypix"
+  monitoring_dpl_url: "no-op://"
+  user: "flp"
+  fmq_rate_logging: 0
+  shm_segment_size: 10000000000
+  shm_throw_bad_alloc: false
+  session_id: default
+  resources_monitoring: 15
+constraints:
+  - attribute: machine_id
+    value: "{{ qc_remote_machine }}"
+roles:
+  - name: "internal-dpl-clock"
+    connect:
+    task:
+      load: its-qcmn-flp-epn-no-ds-noisypix-remote-internal-dpl-clock
+  - name: "FHRTask-proxy"
+    connect:
+    - name: from_internal-dpl-clock_to_FHRTask-proxy
+      type: pull
+      transport: shmem
+      target: "{{ Parent().Path }}.internal-dpl-clock:from_internal-dpl-clock_to_FHRTask-proxy"
+      rateLogging: "{{ fmq_rate_logging }}"
+      sndBufSize: 4
+      rcvBufSize: 4
+    bind:
+    - name: FHRTask-proxy
+      type: sub
+      transport: zeromq
+      addressing: tcp
+      rateLogging: "{{ fmq_rate_logging }}"
+      global: "FHRTask-proxy"
+    task:
+      load: its-qcmn-flp-epn-no-ds-noisypix-remote-FHRTask-proxy
+  - name: "ITSFEE-proxy"
+    connect:
+    - name: from_internal-dpl-clock_to_ITSFEE-proxy
+      type: pull
+      transport: shmem
+      target: "{{ Parent().Path }}.internal-dpl-clock:from_internal-dpl-clock_to_ITSFEE-proxy"
+      rateLogging: "{{ fmq_rate_logging }}"
+      sndBufSize: 4
+      rcvBufSize: 4
+    bind:
+    - name: ITSFEE-proxy
+      type: sub
+      transport: zeromq
+      addressing: tcp
+      rateLogging: "{{ fmq_rate_logging }}"
+      global: "ITSFEE-proxy"
+    task:
+      load: its-qcmn-flp-epn-no-ds-noisypix-remote-ITSFEE-proxy
+  - name: "compclus"
+    connect:
+    - name: from_internal-dpl-clock_to_compclus
+      type: pull
+      transport: shmem
+      target: "{{ Parent().Path }}.internal-dpl-clock:from_internal-dpl-clock_to_compclus"
+      rateLogging: "{{ fmq_rate_logging }}"
+      sndBufSize: 4
+      rcvBufSize: 4
+    bind:
+    - name: compclus
+      type: sub
+      transport: zeromq
+      addressing: tcp
+      rateLogging: "{{ fmq_rate_logging }}"
+      target: "tcp://*:42349"
+    task:
+      load: its-qcmn-flp-epn-no-ds-noisypix-remote-compclus
+  - name: "MERGER-FHRTask1l-0"
+    connect:
+    - name: from_internal-dpl-clock_to_MERGER-FHRTask1l-0
+      type: pull
+      transport: shmem
+      target: "{{ Parent().Path }}.internal-dpl-clock:from_internal-dpl-clock_to_MERGER-FHRTask1l-0"
+      rateLogging: "{{ fmq_rate_logging }}"
+      sndBufSize: 4
+      rcvBufSize: 4
+    - name: from_FHRTask-proxy_to_MERGER-FHRTask1l-0
+      type: pull
+      transport: shmem
+      target: "{{ Parent().Path }}.FHRTask-proxy:from_FHRTask-proxy_to_MERGER-FHRTask1l-0"
+      rateLogging: "{{ fmq_rate_logging }}"
+      sndBufSize: 4
+      rcvBufSize: 4
+    task:
+      load: its-qcmn-flp-epn-no-ds-noisypix-remote-MERGER-FHRTask1l-0
+  - name: "MERGER-ITSFEE1l-0"
+    connect:
+    - name: from_internal-dpl-clock_to_MERGER-ITSFEE1l-0
+      type: pull
+      transport: shmem
+      target: "{{ Parent().Path }}.internal-dpl-clock:from_internal-dpl-clock_to_MERGER-ITSFEE1l-0"
+      rateLogging: "{{ fmq_rate_logging }}"
+      sndBufSize: 4
+      rcvBufSize: 4
+    - name: from_ITSFEE-proxy_to_MERGER-ITSFEE1l-0
+      type: pull
+      transport: shmem
+      target: "{{ Parent().Path }}.ITSFEE-proxy:from_ITSFEE-proxy_to_MERGER-ITSFEE1l-0"
+      rateLogging: "{{ fmq_rate_logging }}"
+      sndBufSize: 4
+      rcvBufSize: 4
+    task:
+      load: its-qcmn-flp-epn-no-ds-noisypix-remote-MERGER-ITSFEE1l-0
+  - name: "qc-task-ITS-ITSNoisyPixelTask"
+    connect:
+    - name: from_internal-dpl-clock_to_qc-task-ITS-ITSNoisyPixelTask
+      type: pull
+      transport: shmem
+      target: "{{ Parent().Path }}.internal-dpl-clock:from_internal-dpl-clock_to_qc-task-ITS-ITSNoisyPixelTask"
+      rateLogging: "{{ fmq_rate_logging }}"
+      sndBufSize: 4
+      rcvBufSize: 4
+    - name: from_compclus_to_qc-task-ITS-ITSNoisyPixelTask
+      type: pull
+      transport: shmem
+      target: "{{ Parent().Path }}.compclus:from_compclus_to_qc-task-ITS-ITSNoisyPixelTask"
+      rateLogging: "{{ fmq_rate_logging }}"
+      sndBufSize: 4
+      rcvBufSize: 4
+    task:
+      load: its-qcmn-flp-epn-no-ds-noisypix-remote-qc-task-ITS-ITSNoisyPixelTask
+  - name: "qc-check-ITSFHRCheck"
+    connect:
+    - name: from_MERGER-FHRTask1l-0_to_qc-check-ITSFHRCheck
+      type: pull
+      transport: shmem
+      target: "{{ Parent().Path }}.MERGER-FHRTask1l-0:from_MERGER-FHRTask1l-0_to_qc-check-ITSFHRCheck"
+      rateLogging: "{{ fmq_rate_logging }}"
+      sndBufSize: 4
+      rcvBufSize: 4
+    task:
+      load: its-qcmn-flp-epn-no-ds-noisypix-remote-qc-check-ITSFHRCheck
+  - name: "qc-check-ITSITSFeeCheck"
+    connect:
+    - name: from_MERGER-ITSFEE1l-0_to_qc-check-ITSITSFeeCheck
+      type: pull
+      transport: shmem
+      target: "{{ Parent().Path }}.MERGER-ITSFEE1l-0:from_MERGER-ITSFEE1l-0_to_qc-check-ITSITSFeeCheck"
+      rateLogging: "{{ fmq_rate_logging }}"
+      sndBufSize: 4
+      rcvBufSize: 4
+    task:
+      load: its-qcmn-flp-epn-no-ds-noisypix-remote-qc-check-ITSITSFeeCheck
+  - name: "qc-check-sink-QC_ITSNoisyPixelTas_0"
+    connect:
+    - name: from_qc-task-ITS-ITSNoisyPixelTask_to_qc-check-sink-QC_ITSNoisyPixelTas_0
+      type: pull
+      transport: shmem
+      target: "{{ Parent().Path }}.qc-task-ITS-ITSNoisyPixelTask:from_qc-task-ITS-ITSNoisyPixelTask_to_qc-check-sink-QC_ITSNoisyPixelTas_0"
+      rateLogging: "{{ fmq_rate_logging }}"
+      sndBufSize: 4
+      rcvBufSize: 4
+    task:
+      load: its-qcmn-flp-epn-no-ds-noisypix-remote-qc-check-sink-QC_ITSNoisyPixelTas_0
+  - name: "internal-dpl-injected-dummy-sink"
+    connect:
+    - name: from_qc-check-ITSFHRCheck_to_internal-dpl-injected-dummy-sink
+      type: pull
+      transport: shmem
+      target: "{{ Parent().Path }}.qc-check-ITSFHRCheck:from_qc-check-ITSFHRCheck_to_internal-dpl-injected-dummy-sink"
+      rateLogging: "{{ fmq_rate_logging }}"
+      sndBufSize: 4
+      rcvBufSize: 4
+    - name: from_qc-check-ITSITSFeeCheck_to_internal-dpl-injected-dummy-sink
+      type: pull
+      transport: shmem
+      target: "{{ Parent().Path }}.qc-check-ITSITSFeeCheck:from_qc-check-ITSITSFeeCheck_to_internal-dpl-injected-dummy-sink"
+      rateLogging: "{{ fmq_rate_logging }}"
+      sndBufSize: 4
+      rcvBufSize: 4
+    task:
+      load: its-qcmn-flp-epn-no-ds-noisypix-remote-internal-dpl-injected-dummy-sink
+  - name: fairmq-shmmonitor
+    enabled: "{{fmq_cleanup_enabled == 'true'}}"
+    task:
+      load: "fairmq-shmmonitor"
+      trigger: DESTROY
+      timeout: 10s
+      critical: false
