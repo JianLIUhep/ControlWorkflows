@@ -338,7 +338,7 @@ defaults:
       - its-qcmn-flp-epn-remote
       - its-qcmn-flp-epn-no-ds-remote
       - its-qcmn-flp-epn-no-ds-nocluster-remote
-      - its-qcmn-noisypix
+      - its-qcmn-noisypix-remote
       - qcmn-daq-remote
     visibleif: $$qc_remote_enabled === "true"  
   its_dcs_sor_parameters: !public
