@@ -20,48 +20,48 @@ roles:
     connect:
     task:
       load: its-qcmn-noisypix-remote-internal-dpl-clock
-  - name: "compclus"
+  - name: "ITSNoisyPixelTask-proxy"
     connect:
-    - name: from_internal-dpl-clock_to_compclus
+    - name: from_internal-dpl-clock_to_ITSNoisyPixelTask-proxy
       type: pull
       transport: shmem
-      target: "{{ Parent().Path }}.internal-dpl-clock:from_internal-dpl-clock_to_compclus"
+      target: "{{ Parent().Path }}.internal-dpl-clock:from_internal-dpl-clock_to_ITSNoisyPixelTask-proxy"
       rateLogging: "{{ fmq_rate_logging }}"
       sndBufSize: 4
       rcvBufSize: 4
     bind:
-    - name: compclus
+    - name: ITSNoisyPixelTask-proxy
       type: sub
       transport: zeromq
       addressing: tcp
       rateLogging: "{{ fmq_rate_logging }}"
-      target: "tcp://*:42349"
+      target: "tcp://*:47706"
     task:
-      load: its-qcmn-noisypix-remote-compclus
-  - name: "qc-task-ITS-ITSNoisyPixelTask"
+      load: its-qcmn-noisypix-remote-ITSNoisyPixelTask-proxy
+  - name: "MERGER-ITSNoisyPixelTask1l-0"
     connect:
-    - name: from_internal-dpl-clock_to_qc-task-ITS-ITSNoisyPixelTask
+    - name: from_internal-dpl-clock_to_MERGER-ITSNoisyPixelTask1l-0
       type: pull
       transport: shmem
-      target: "{{ Parent().Path }}.internal-dpl-clock:from_internal-dpl-clock_to_qc-task-ITS-ITSNoisyPixelTask"
+      target: "{{ Parent().Path }}.internal-dpl-clock:from_internal-dpl-clock_to_MERGER-ITSNoisyPixelTask1l-0"
       rateLogging: "{{ fmq_rate_logging }}"
       sndBufSize: 4
       rcvBufSize: 4
-    - name: from_compclus_to_qc-task-ITS-ITSNoisyPixelTask
+    - name: from_ITSNoisyPixelTask-proxy_to_MERGER-ITSNoisyPixelTask1l-0
       type: pull
       transport: shmem
-      target: "{{ Parent().Path }}.compclus:from_compclus_to_qc-task-ITS-ITSNoisyPixelTask"
+      target: "{{ Parent().Path }}.ITSNoisyPixelTask-proxy:from_ITSNoisyPixelTask-proxy_to_MERGER-ITSNoisyPixelTask1l-0"
       rateLogging: "{{ fmq_rate_logging }}"
       sndBufSize: 4
       rcvBufSize: 4
     task:
-      load: its-qcmn-noisypix-remote-qc-task-ITS-ITSNoisyPixelTask
+      load: its-qcmn-noisypix-remote-MERGER-ITSNoisyPixelTask1l-0
   - name: "qc-check-sink-QC_ITSNoisyPixelTas_0"
     connect:
-    - name: from_qc-task-ITS-ITSNoisyPixelTask_to_qc-check-sink-QC_ITSNoisyPixelTas_0
+    - name: from_MERGER-ITSNoisyPixelTask1l-0_to_qc-check-sink-QC_ITSNoisyPixelTas_0
       type: pull
       transport: shmem
-      target: "{{ Parent().Path }}.qc-task-ITS-ITSNoisyPixelTask:from_qc-task-ITS-ITSNoisyPixelTask_to_qc-check-sink-QC_ITSNoisyPixelTas_0"
+      target: "{{ Parent().Path }}.MERGER-ITSNoisyPixelTask1l-0:from_MERGER-ITSNoisyPixelTask1l-0_to_qc-check-sink-QC_ITSNoisyPixelTas_0"
       rateLogging: "{{ fmq_rate_logging }}"
       sndBufSize: 4
       rcvBufSize: 4

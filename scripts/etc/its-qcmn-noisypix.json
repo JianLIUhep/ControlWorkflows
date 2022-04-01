@@ -35,7 +35,7 @@
           "type": "dataSamplingPolicy",
           "name": "compclus"
         },
-        "location": "remote",
+        "location": "local",
         "taskParameters": {
                     "layer": "1111111",
                     "clusterDictionaryPath": "/home/epn/odc/files/ITSdictionary.bin",
