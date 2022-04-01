@@ -1,0 +1,76 @@
+name: its-qcmn-noisypix-remote
+vars:
+  dpl_command: >-
+    o2-qc --config {{ qc_config_uri }} --remote -b
+defaults:
+  qc_remote_machine: "alio2-cr1-qme04"
+  qc_config_uri: "consul-json://{{ consul_endpoint }}/o2/components/qc/ANY/any/its-qcmn-noisypix"
+  monitoring_dpl_url: "no-op://"
+  user: "flp"
+  fmq_rate_logging: 0
+  shm_segment_size: 10000000000
+  shm_throw_bad_alloc: false
+  session_id: default
+  resources_monitoring: 15
+constraints:
+  - attribute: machine_id
+    value: "{{ qc_remote_machine }}"
+roles:
+  - name: "internal-dpl-clock"
+    connect:
+    task:
+      load: its-qcmn-noisypix-remote-internal-dpl-clock
+  - name: "compclus"
+    connect:
+    - name: from_internal-dpl-clock_to_compclus
+      type: pull
+      transport: shmem
+      target: "{{ Parent().Path }}.internal-dpl-clock:from_internal-dpl-clock_to_compclus"
+      rateLogging: "{{ fmq_rate_logging }}"
+      sndBufSize: 4
+      rcvBufSize: 4
+    bind:
+    - name: compclus
+      type: sub
+      transport: zeromq
+      addressing: tcp
+      rateLogging: "{{ fmq_rate_logging }}"
+      target: "tcp://*:42349"
+    task:
+      load: its-qcmn-noisypix-remote-compclus
+  - name: "qc-task-ITS-ITSNoisyPixelTask"
+    connect:
+    - name: from_internal-dpl-clock_to_qc-task-ITS-ITSNoisyPixelTask
+      type: pull
+      transport: shmem
+      target: "{{ Parent().Path }}.internal-dpl-clock:from_internal-dpl-clock_to_qc-task-ITS-ITSNoisyPixelTask"
+      rateLogging: "{{ fmq_rate_logging }}"
+      sndBufSize: 4
+      rcvBufSize: 4
+    - name: from_compclus_to_qc-task-ITS-ITSNoisyPixelTask
+      type: pull
+      transport: shmem
+      target: "{{ Parent().Path }}.compclus:from_compclus_to_qc-task-ITS-ITSNoisyPixelTask"
+      rateLogging: "{{ fmq_rate_logging }}"
+      sndBufSize: 4
+      rcvBufSize: 4
+    task:
+      load: its-qcmn-noisypix-remote-qc-task-ITS-ITSNoisyPixelTask
+  - name: "qc-check-sink-QC_ITSNoisyPixelTas_0"
+    connect:
+    - name: from_qc-task-ITS-ITSNoisyPixelTask_to_qc-check-sink-QC_ITSNoisyPixelTas_0
+      type: pull
+      transport: shmem
+      target: "{{ Parent().Path }}.qc-task-ITS-ITSNoisyPixelTask:from_qc-task-ITS-ITSNoisyPixelTask_to_qc-check-sink-QC_ITSNoisyPixelTas_0"
+      rateLogging: "{{ fmq_rate_logging }}"
+      sndBufSize: 4
+      rcvBufSize: 4
+    task:
+      load: its-qcmn-noisypix-remote-qc-check-sink-QC_ITSNoisyPixelTas_0
+  - name: fairmq-shmmonitor
+    enabled: "{{fmq_cleanup_enabled == 'true'}}"
+    task:
+      load: "fairmq-shmmonitor"
+      trigger: DESTROY
+      timeout: 10s
+      critical: false
