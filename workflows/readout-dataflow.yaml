@@ -320,6 +320,7 @@ defaults:
       - its-qcmn-fhr-fee-no-ds-local
       - its-qcmn-fhr-fee-no-ds-entire-local
       - its-qcmn-fee-no-ds-local
+      - its-qcmn-flp-entire-local
       - minimal-dpl
       - qc-daq
       - qcmn-daq-local
@@ -343,6 +344,8 @@ defaults:
       - its-qcmn-epn-remote
       - its-qcmn-flp-epn-no-ds-nocluster-remote
       - its-qcmn-epn-calibration-remote
+      - its-qcmn-flp-entire-remote
+      - its-qcmn-full-entire-remote
       - qcmn-daq-remote
     visibleif: $$qc_remote_enabled === "true"  
   its_dcs_sor_parameters: !public
